@@ -187,7 +187,7 @@ rm(test_cum, i, a, days)
 su_rainfall <- readRDS("./dat/interim/su_rainfall_45_5000_dateshifted.Rds") %>% sf::st_as_sf()
 
 # load grids
-grids <- list.files("./dat/raw/grids", pattern = ".tif$", full.names = T)[c(1, 40, 43)]
+grids <- list.files("./dat/raw/grids", pattern = ".tif$", full.names = T)[c(1, 13, 14)]
 grids <- c(grids, list.files("./dat/processed/", pattern = "susceptibility.tif$", full.names = T))
 name_grids <- gsub("./dat/raw/grids/", "", gsub(".tif", "", grids))
 name_grids[4] <- "susceptibility"; name_grids
@@ -252,6 +252,9 @@ d_rgw <- d_rgw %>%
 # trivial times (precipitation lower than 1.1 is assumed to be as no precipitation)
 d_rgw <- dplyr::filter(d_rgw, p_1 > 1.1) # drops 24941 SUs
 
+# store
+# saveRDS(d_rgw, "./dat/interim/1su_rainfall_45_5000_df_tune.Rds")
+
 
 # GRID SEARCH -------------------------------------------------------------
 
@@ -306,10 +309,10 @@ Sys.time()-a
 parallel::stopCluster(cl = clust)
 
 # storing results
-# saveRDS(result_aucs, "./dat/interim/su_spacetime_45_5000_finetuned_onlypre.Rds")
+# saveRDS(result_aucs, "./dat/processed/su_spacetime_45_5000_finetuned.Rds")
 
 # load results
-result_aucs <- readRDS("./dat/interim/su_spacetime_45_5000_finetuned_onlypre.Rds")
+result_aucs <- readRDS("./dat/interim/su_spacetime_45_5000_finetuned.Rds")
 
 # calculating performance
 my_aucs <- lapply(result_aucs, function(x) do.call(rbind, x))
@@ -327,7 +330,7 @@ grid_search <- grid_search %>%
 title <- dplyr::filter(grid_search, auc_median == max(auc_median))
 
 # plot
-ggplot(grid_search, aes(x = pr, y = tr, fill = auc_median))+
+ggplot2::ggplot(grid_search, aes(x = pr, y = tr, fill = auc_median))+
   geom_tile(color = "white", lwd = 0.07, linetype = 1)+
   scale_fill_gradientn(colors = hcl.colors(50, "Blues", rev = -1))+
   ggtitle(paste(paste("Median AUC="), paste(c(round(title[6],3))), paste("for preparatory="), 
@@ -348,4 +351,4 @@ ggplot(grid_search, aes(x = pr, y = tr, fill = auc_median))+
         legend.text = element_text(size = 14),
         legend.position = "bottom",
         plot.title = element_text(hjust = 0.5))
-ggplot2::ggsave("./plt/03_gridsearch.pdf", width = 11, height = 8, paper="a4r")
+# ggplot2::ggsave("./plt/03_gridsearch.pdf", width = 11, height = 8, paper = "a4r")
