@@ -19,10 +19,9 @@ rm(list.packages)
 aoi <- sf::st_read("./dat/raw/aoi.gpkg")
 su <- sf::st_read("./dat/raw/su.gpkg") %>% dplyr::mutate(label = as.factor(label))
 landslides <- sf::st_read("./dat/interim/landslides_spacetime.gpkg") 
-su_rainfall <- readRDS("./dat/interim/su_rainfall_45_5000_dateshifted.Rds") %>% sf::st_as_sf()
 
 # best combination p1 and p15_1
-d_rgw <- readRDS("./dat/interim/su_rainfall_45_5000_df_tune.Rds") %>% 
+d_rgw <- readRDS("./dat/processed/su_rainfall_45_5000_df_tune.Rds") %>% 
   dplyr::mutate(preparatory = p15_1) %>%
   dplyr::mutate(triggering = p_1) %>%
   dplyr::relocate(c(preparatory, triggering), .after=suscept_rgw) %>%
@@ -49,11 +48,11 @@ summary(mod)
 
 # fitting performance
 d_rgw$susc_fitrgw <- predict(mod, type = "response", newdata = d_rgw, newdata.guaranteed = TRUE)
-myroc_ftune <- roc(response = d_rgw$bin, predictor = d_rgw$susc_fitrgw, auc = T);plot(myroc_ftune, main = round(myroc_ftune$auc, 5))
+myroc_ftune <- pROC::roc(response = d_rgw$bin, predictor = d_rgw$susc_fitrgw, auc = T);plot(myroc_ftune, main = round(myroc_ftune$auc, 5))
 
 # partial plots
 # pdf("./plt/04_dynamic_partial_plots.pdf", width = 11, height = 8, paper="a4r")
-par(mfrow = c(2,4))
+par(mfrow = c(1,4))
 par(pty="s")
 plot(mod, select = 1, trans = plogis, xlim = c(0, 0.8), ylim = c(0, 1), scale = -1, seWithMean = T, shift = coef(mod)[1], ylab = "", xlab = "Static susceptibility")
 plot(mod, select = 2, trans = plogis, xlim = c(0, 300), ylim = c(0, 1), scale = -1, seWithMean = F, shift = coef(mod)[1], ylab = "", xlab = "Preparatory precipitation (mm)")
