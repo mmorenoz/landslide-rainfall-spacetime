@@ -1,2 +1,0 @@
-dat/interim/*.Rds filter=lfs diff=lfs merge=lfs -text
-dat/interim/*.gpkg filter=lfs diff=lfs merge=lfs -text
