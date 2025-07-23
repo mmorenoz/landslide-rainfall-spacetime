@@ -9,7 +9,7 @@ Volkmair Mair <sup>[![](https://info.orcid.org/wp-content/uploads/2020/12/orcid_
 Massimiliano Pittore <sup>[![](https://info.orcid.org/wp-content/uploads/2020/12/orcid_16x16.gif)](https://orcid.org/0000-0003-4940-3444)</sup>,
 Cees van Westen <sup>[![](https://info.orcid.org/wp-content/uploads/2020/12/orcid_16x16.gif)](https://orcid.org/0000-0002-2992-902X)</sup>
 and Stefan Steger <sup>[![](https://info.orcid.org/wp-content/uploads/2020/12/orcid_16x16.gif)](https://orcid.org/0000-0003-0886-5191)</sup>
-[![DOI](https://zenodo.org/badge/887347458.svg)](https://doi.org/10.5281/zenodo.15033256)
+[![DOI](https://zenodo.org/badge/1019365268.svg)](https://doi.org/10.5281/zenodo.16369064)
 
 > Moreno, M., Lombardo, L., Crespi, A., Zellner, P. J., Mair, V., Pittore, M., van Westen, C. J., & Steger, S. (2024). Space-time data-driven modeling of precipitation-induced shallow landslides in South Tyrol, Italy. Science of The Total Environment, 912(169166). <https://doi.org/10.1016/j.scitotenv.2023.169166>
 
